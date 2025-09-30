@@ -15,6 +15,7 @@ let backgroundGradient = LinearGradient(
     endPoint: .bottom
 )
 
+
 struct ContentView: View {
     @State private var name: String = ""
     
@@ -59,14 +60,22 @@ struct ContentView: View {
             
             // Centered TextField positioned above the middle of the screen
             VStack {
-                Spacer()
+                
+                
+                
+                
+                
+             
                 TextField("Enter habit", text: $name)
                     //.textFieldStyle(.roundedBorder)
                     .padding(.horizontal, 20)
-                Spacer()
+                   
+           
+                
+                HorizontalButtonScrollView()
+                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .offset(y: -80)
             .zIndex(1)
           
             

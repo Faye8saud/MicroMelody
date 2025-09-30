@@ -10,6 +10,9 @@ import SwiftUI
 
 
 struct mainFeatureView: View {
+    
+    @State private var showingActionSheet = false
+    
     var body: some View {
         ZStack {
             Color(.mainLight)
@@ -21,10 +24,10 @@ struct mainFeatureView: View {
                     .foregroundColor(.mainBrown)
                 
                 Menu {
-                    Button("Menu Item 1") { print("Item 1 selected") }
-                    Button("Menu Item 2") { print("Item 2 selected") }
-                    Button("Menu Item 3") { print("Item 3 selected") }
-                } label: {
+                    Button("Cancel Journey") {
+                        showingActionSheet = true
+                    }
+                                    } label: {
                     Text("...")
                         .font(.system(size: 30, weight: .bold))
                         .foregroundColor(.mainBrown)
@@ -137,6 +140,21 @@ struct mainFeatureView: View {
             }
             .ignoresSafeArea(edges: .bottom)
              }
+        .confirmationDialog(
+            "Starting over",
+            isPresented: $showingActionSheet,
+            titleVisibility: .visible
+        ) {
+            Button("Resume") {
+                // Action for Option 1
+            }
+            Button("Restart journey", role: .destructive) {
+                // Action for Delete
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("do you want to let go of this habit?")
+        }
         }
         }
 
