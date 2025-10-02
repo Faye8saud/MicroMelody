@@ -94,63 +94,52 @@ struct CardView: View {
 
 // MARK: - Main Scrollable View
 struct HorizontalButtonScrollView: View {
-    
+    @Binding var selectedDays: Int
     // Data Structure for the Cards
     let cardData = [
-        ("14 Days Symphony", """
-         lorem ipsum dolor sit
-         amot lorem ipsum dolor
-         sit amot orem ipsum
-         dolor sit amot
-         lorem ipsum dolor sit
-         amot
-         """),
-        ("21 Days Symphony", """
-         adipiscing elit sed do
-         eiusmod tempor incididunt
-         ut labore et dolore
-         magna aliqua ut enim
-         ad minim veniam
-         """),
-        ("66 Days Symphony", """
-         quis nostrud exercitation
-         ullamco laboris nisi ut
-         aliquip ex ea commodo
-         consequat duis aute
-         irure dolor
-         """)
-    ]
-    
+           ("14 Days Symphony", 14, """
+            lorem ipsum dolor sit
+            amot lorem ipsum dolor
+            sit amot orem ipsum
+            dolor sit amot
+            lorem ipsum dolor sit
+            amot
+            """),
+           ("21 Days Symphony", 21, """
+            adipiscing elit sed do
+            eiusmod tempor incididunt
+            ut labore et dolore
+            magna aliqua ut enim
+            ad minim veniam
+            """),
+           ("66 Days Symphony", 66, """
+            quis nostrud exercitation
+            ullamco laboris nisi ut
+            aliquip ex ea commodo
+            consequat duis aute
+            irure dolor
+            """)
+       ]
 
-    var body: some View {
-        
-        
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 25) { // Adjusted spacing between cards
-                
-                // Add padding before the first card starts
-                //Spacer()
-                
-                // Iterate over the card data
-                ForEach(cardData, id: \.0) { title, bodyText in
-                    CardView(
-                        title: title,
-                        bodyPlaceholder: bodyText
-                    ) {
-                        print("Button \(title) tapped!")
-                    }
-                }
-                
-                // Add padding after the last card
-                Spacer().frame(width: 10)
-            }
-            
-            // Remove the .padding(.horizontal) on the HStack
-            // and replace it with Spacers for better visual control.
-        }
-    }
-}
-
-#Preview {
-    HorizontalButtonScrollView()
-}
+       var body: some View {
+           ScrollView(.horizontal, showsIndicators: false) {
+               HStack(spacing: 25) {
+                   ForEach(cardData, id: \.0) { title, days, bodyText in
+                       CardView(
+                           title: title,
+                           bodyPlaceholder: bodyText
+                       ) {
+                           selectedDays = days
+                           print("Selected \(days) days")
+                       }
+                       // Optionally style the card if selected
+                       .overlay(
+                           RoundedRectangle(cornerRadius: 14)
+                               .stroke(selectedDays == days ? Color.blue : Color.clear, lineWidth: 3)
+                       )
+                   }
+                   Spacer().frame(width: 10)
+               }
+           }
+       }
+   }

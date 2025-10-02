@@ -16,8 +16,14 @@ let backgroundGradient = LinearGradient(
 )
 
 
-struct ContentView: View {
+struct mainMenuView: View {
+    
     @State private var name: String = ""
+
+    @AppStorage("habitName") private var habitName: String = ""
+    @AppStorage("selectedDays") private var selectedDays: Int = 0
+    
+    @State private var navigateToFeature = false
     
     private struct UnderlineStyle {
         let height: CGFloat
@@ -64,43 +70,50 @@ struct ContentView: View {
                     
                     
                     
-                    TextField("Enter habit", text: $name)
+                    TextField("Enter habit", text: $habitName)
                     //.textFieldStyle(.roundedBorder)
                         .padding(.horizontal, 20)
                     
                     
                     
-                    HorizontalButtonScrollView()
+                    HorizontalButtonScrollView(selectedDays: $selectedDays)
                     
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .zIndex(1)
                 
                 
+                
                 VStack {
                     
-                    
+                    NavigationLink(
+                                           destination: mainFeatureView(),
+                                           isActive: $navigateToFeature,
+                                           label: { EmptyView() }
+                                       )
                     
                     Button(action: {
-                        print("Button tapped!")
-                    }) {
-                        Text("Start journey")
-                            .font(.custom("arial rounded mt bold", size: buttonFontSize))
-                            .frame(width: buttonSize.width, height: buttonSize.height)
-                            .background(.mainBlue)
-                            .foregroundColor(.white)
-                            .cornerRadius(16)
-                            .shadow(radius: 5)
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                .ignoresSafeArea(.keyboard)
-                .padding(20)
-            }
+                                    print("Starting journey with habit: \(habitName), days: \(selectedDays)")
+                        navigateToFeature = true  // Trigger navigation here
+                                            }) {
+                                  Text("Start journey")
+                                      .font(.custom("arial rounded mt bold", size: buttonFontSize))
+                                      .frame(width: buttonSize.width, height: buttonSize.height)
+                                      .background(.mainBlue)
+                                      .foregroundColor(.white)
+                                      .cornerRadius(16)
+                                      .shadow(radius: 5)
+                              }
+                              .disabled(habitName.isEmpty || selectedDays == 0) // disable if no input
+                          }
+                          .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                          .ignoresSafeArea(.keyboard)
+                          .padding(20)
+                      }
         }
     }
 }
 #Preview {
-    ContentView()
+    mainMenuView()
 }
 
