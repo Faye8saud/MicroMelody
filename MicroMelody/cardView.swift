@@ -31,7 +31,7 @@ let cardBackgroundGradient = LinearGradient(
     endPoint: .bottomTrailing
 )
 
-// MARK: - Reusable Card View
+//  Card View
 struct CardView: View {
     let title: String
     let bodyPlaceholder: String
@@ -42,17 +42,17 @@ struct CardView: View {
         
         Spacer()
         
-        // 1. Button Wrapper: Provides tap action and visual feedback
+        // 1. Button Wrapper
         Button(action: action) {
             ZStack(alignment: .topLeading) {
-                // 2. Card Background: The rounded rectangle with corner radius
+                // 2. Card Background
                 RoundedRectangle(cornerRadius: 14)
                     .fill(cardBackgroundGradient)
                     .frame(width: 235, height: 350)
                     .shadow(color: Color(hex: "#638281").opacity(28/100), radius: 0, x: 14, y: -14).padding(.top, 35)
                 
                 
-                // 4. Card Content: Stacked vertically
+                // 3. Card Content
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Rectangle()
@@ -79,45 +79,49 @@ struct CardView: View {
                         .font(.system(size: 16, weight: .regular))
                         .lineSpacing(6)
                     
-                    //Spacer() // Pushes content to the top
+                   
                 }
                 .padding(.horizontal)
                 .padding(.top, 35)
               
             }
         }
-        // Use PlainButtonStyle to prevent the text from fading when tapped
+        
         .buttonStyle(PlainButtonStyle())
         
     }
 }
 
-// MARK: - Main Scrollable View
+//  Main Scrollable View
 struct HorizontalButtonScrollView: View {
     @Binding var selectedDays: Int
     // Data Structure for the Cards
     let cardData = [
            ("14 Days Symphony", 14, """
-            lorem ipsum dolor sit
-            amot lorem ipsum dolor
-            sit amot orem ipsum
-            dolor sit amot
-            lorem ipsum dolor sit
-            amot
+            Each note is an instant win.
+            Complete a satisfying 
+            musical phrase in 
+            14 days and 
+            quickly test drive
+            a new habit.
             """),
            ("21 Days Symphony", 21, """
-            adipiscing elit sed do
-            eiusmod tempor incididunt
-            ut labore et dolore
-            magna aliqua ut enim
-            ad minim veniam
+            Every check-in 
+            is a rich chord. 
+            Layer the sounds over 
+            21 days
+            to achieve automatic 
+            consistency and build 
+            a solid harmonic foundation.
             """),
            ("66 Days Symphony", 66, """
-            quis nostrud exercitation
-            ullamco laboris nisi ut
-            aliquip ex ea commodo
-            consequat duis aute
-            irure dolor
+            Each note tracks your 
+            discipline.
+            Compose a full, 
+            complex symphony in 
+            66 days, 
+            turning effort into a 
+            permanent lifestyle mastery.
             """)
        ]
 
@@ -132,7 +136,7 @@ struct HorizontalButtonScrollView: View {
                            selectedDays = days
                            print("Selected \(days) days")
                        }
-                       // Optionally style the card if selected
+                       
                        .overlay(
                            RoundedRectangle(cornerRadius: 14)
                                .stroke(selectedDays == days ? Color.blue : Color.clear, lineWidth: 3)

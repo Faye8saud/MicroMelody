@@ -17,9 +17,9 @@ let backgroundGradient = LinearGradient(
 
 
 struct mainMenuView: View {
-    
     @State private var name: String = ""
-
+    
+    
     @AppStorage("habitName") private var habitName: String = ""
     @AppStorage("selectedDays") private var selectedDays: Int = 0
     
@@ -35,84 +35,89 @@ struct mainMenuView: View {
     private let buttonFontSize: CGFloat = 22
     
     var body: some View {
-        ZStack {
-            backgroundGradient
-                .ignoresSafeArea()
-            VStack{
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("Micro Melody")
-                        .foregroundColor(Color(.mainBrown))
-                        .font(.custom("arial rounded mt bold", size: 40))
+        ZStack(alignment: .topLeading) {
                     
-                        .overlay(alignment: .bottomLeading) {
-                            GeometryReader { proxy in
-                                Rectangle()
-                                    .fill(.mainBrown.opacity(34/100))
-                                    .frame(
-                                        width: max(0, proxy.size.width + 35 ),
-                                        height: underline.height
-                                    )
-                                    .offset(x: underline.inset - 30, y: underline.spacing + 45)
-                            }
-                            .allowsHitTesting(false)
+                    
+                    backgroundGradient
+                        .ignoresSafeArea()
+
+                    // Main content container (holds only the Header and the ScrollView)
+                    VStack(alignment: .leading, spacing: 0) {
+                        
+                        
+                        VStack(alignment: .leading, spacing: 16) {
+                            Text("Micro Melody")
+                                .foregroundColor(Color(.mainBrown))
+                                .font(.custom("arial rounded mt bold", size: 40))
+
+                            Rectangle()
+                                .fill(Color.mainBrown.opacity(0.34))
+                                .frame(width: 254, height: 2, alignment: .bottomLeading)
                         }
-                        .padding(.bottom, underline.spacing + underline.height)
+                        .padding(.horizontal)
+                        .padding(.top)
+                        .zIndex(1)
+
+                       
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 20) {
+                                
+                                
+                                Spacer().frame(height: 50)
+                                
+                                TextField("Enter habit", text: $habitName)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    //.background(Color.white.opacity(0.8))
+                                    .cornerRadius(8)
+                                
+                                HorizontalButtonScrollView(selectedDays: $selectedDays)
+                                    .padding(.bottom, 10)
+                                
+                                
+                                Spacer().frame(minHeight: 150)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 150)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                     
-                    Spacer()
+                    
+                    VStack {
+                        Spacer()
+                        
+                        NavigationLink(
+                                               destination: mainFeatureView(),
+                                               isActive: $navigateToFeature,
+                                               label: { EmptyView() }
+                                           )
+                        
+                        Button(action: { print("Starting journey with habit: \(habitName), days: \(selectedDays)")
+                            navigateToFeature = true
+                        }) {
+                            Text("Start journey")
+                                .font(.custom("arial rounded mt bold", size: 17))
+                                .frame(width: 148, height: 50)
+                                .background(Color.mainBlue)
+                                .foregroundColor(.white)
+                                .cornerRadius(12)
+                                .shadow(radius: 5)
+                        }
+                        .disabled(habitName.isEmpty || selectedDays == 0) // disable if no input
+                        
+                        .padding(.bottom, 30)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
+                  //  .background(Color.white.opacity(0.9))
+                    .zIndex(2) 
                 }
-                
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(20)
-                
-                // Centered TextField positioned above the middle of the screen
-                VStack {
-                    
-                    
-                    
-                    
-                    TextField("Enter habit", text: $habitName)
-                    //.textFieldStyle(.roundedBorder)
-                        .padding(.horizontal, 20)
-                    
-                    
-                    
-                    HorizontalButtonScrollView(selectedDays: $selectedDays)
-                    
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .zIndex(1)
-                
-                
-                
-                VStack {
-                    
-                    NavigationLink(
-                                           destination: mainFeatureView(),
-                                           isActive: $navigateToFeature,
-                                           label: { EmptyView() }
-                                       )
-                    
-                    Button(action: {
-                                    print("Starting journey with habit: \(habitName), days: \(selectedDays)")
-                        navigateToFeature = true  // Trigger navigation here
-                                            }) {
-                                  Text("Start journey")
-                                      .font(.custom("arial rounded mt bold", size: buttonFontSize))
-                                      .frame(width: buttonSize.width, height: buttonSize.height)
-                                      .background(.mainBlue)
-                                      .foregroundColor(.white)
-                                      .cornerRadius(16)
-                                      .shadow(radius: 5)
-                              }
-                              .disabled(habitName.isEmpty || selectedDays == 0) // disable if no input
-                          }
-                          .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
-                          .ignoresSafeArea(.keyboard)
-                          .padding(20)
-                      }
+            }
         }
-    }
-}
+    
+
 #Preview {
     mainMenuView()
 }
