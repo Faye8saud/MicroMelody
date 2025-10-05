@@ -75,7 +75,7 @@ struct CardView: View {
                     
                     // Body Text
                     Text(bodyPlaceholder)
-                        .foregroundColor(Color(hex: "#8D7763"))
+                        .foregroundColor(Color(hex: "#EFE7DF"))
                         .font(.system(size: 16, weight: .regular))
                         .lineSpacing(6)
                     
@@ -137,10 +137,10 @@ struct HorizontalButtonScrollView: View {
                            print("Selected \(days) days")
                        }
                        
-                       .overlay(
-                           RoundedRectangle(cornerRadius: 14)
-                               .stroke(selectedDays == days ? Color.blue : Color.clear, lineWidth: 3)
-                       )
+//                       .overlay(
+//                           RoundedRectangle(cornerRadius: 14)
+//                               .stroke(selectedDays == days ? Color.blue : Color.clear, lineWidth: 3)
+                       
                    }
                    Spacer().frame(width: 10)
                }

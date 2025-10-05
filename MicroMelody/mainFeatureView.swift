@@ -67,21 +67,14 @@ struct mainFeatureView: View {
                     .ignoresSafeArea()
                 VStack{
                     
-                    HStack(spacing: 160) {
+                    HStack(spacing: 200) {
                         
                         ZStack {
-                            Text("Day \(currentDay) out of  \(selectedDays)")
+                            Text(" there \(habitName)")
                                 .font(.system(size: 21, weight: .bold))
                                 .foregroundColor(.mainBrown)
-                                .frame(width: 170)
-                                .transition(
-                                    .asymmetric(
-                                        insertion: .move(edge: .trailing).combined(with: .opacity),
-                                        removal: .move(edge: .leading).combined(with: .opacity)
-                                    )
-                                )
+                            // .frame(width: 170)
                         }
-                        .animation(.easeInOut(duration: 0.8), value: currentDay)
                         
                         Menu {
                             Button("Cancel Journey") {
@@ -100,7 +93,7 @@ struct mainFeatureView: View {
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, alignment: .top)
-                
+                VStack{
                 ZStack {
                     RoundedRectangle(cornerRadius: 50)
                         .fill(
@@ -182,12 +175,12 @@ struct mainFeatureView: View {
                                 if isChecked {
                                     startVinylAnimation()
                                     playSound(for: currentDay)
-
-
+                                    
+                                    
                                     withAnimation(.easeInOut(duration: 0.3)) {
                                         vinylSize = 390
                                     }
-
+                                    
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                         withAnimation(.easeInOut(duration: 0.8)) {
                                             if currentDay < selectedDays {
@@ -198,7 +191,7 @@ struct mainFeatureView: View {
                                             }
                                         }
                                     }
-
+                                    
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
                                         withAnimation(.easeInOut(duration: 0.4)) {
                                             vinylSize = 350
@@ -231,14 +224,29 @@ struct mainFeatureView: View {
                         .offset(y: 75)
                         
                     }
-                    HStack(spacing: 250) {
+                    HStack(spacing: 0) {
+                        ZStack{
+                            Text("Day \(currentDay) out of  \(selectedDays)")
+                                .font(.system(size: 34, weight: .bold))
+                                .foregroundColor(.mainLight)
+                            //.padding(.horizontal)
+                                .multilineTextAlignment(.center)
+                            
+                                .transition(
+                                    .asymmetric(
+                                        insertion: .move(edge: .trailing).combined(with: .opacity),
+                                        removal: .move(edge: .leading).combined(with: .opacity)
+                                    )
+                                )
+                        }
+                        .animation(.easeInOut(duration: 0.8), value: currentDay)
                         Text(" \(habitName)")
-                            .font(.system(size: 34, weight: .bold))
-                            .foregroundColor(.mainLight)
+                        
                     }
                     .offset(y: 290)
                 }
                 .ignoresSafeArea(edges: .bottom)
+            }
             }
             .confirmationDialog(
                 "Starting over",

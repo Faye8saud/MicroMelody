@@ -114,6 +114,11 @@ struct mainMenuView: View {
                   //  .background(Color.white.opacity(0.9))
                     .zIndex(2) 
                 }
+         .onAppear {
+                    // Clear the app storage data when this view appears
+                    habitName = ""
+                    selectedDays = 0
+                }
             }
         }
     
