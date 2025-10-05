@@ -137,9 +137,10 @@ struct HorizontalButtonScrollView: View {
                            print("Selected \(days) days")
                        }
                        
-//                       .overlay(
-//                           RoundedRectangle(cornerRadius: 14)
-//                               .stroke(selectedDays == days ? Color.blue : Color.clear, lineWidth: 3)
+                       .overlay(
+                           RoundedRectangle(cornerRadius: 14)
+                            .stroke(selectedDays == days ? Color.white.opacity(40/100) : Color.clear, lineWidth: 3)
+                       )
                        
                    }
                    Spacer().frame(width: 10)

@@ -70,7 +70,7 @@ struct mainFeatureView: View {
                     HStack(spacing: 200) {
                         
                         ZStack {
-                            Text(" there \(habitName)")
+                            Text("\(habitName)")
                                 .font(.system(size: 21, weight: .bold))
                                 .foregroundColor(.mainBrown)
                             // .frame(width: 170)
@@ -240,7 +240,6 @@ struct mainFeatureView: View {
                                 )
                         }
                         .animation(.easeInOut(duration: 0.8), value: currentDay)
-                        Text(" \(habitName)")
                         
                     }
                     .offset(y: 290)
